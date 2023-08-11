@@ -22,6 +22,10 @@ sam.invoke.sync:
 	cat tmp/fn.json | jq
 sam.invoke.async:
 	aws --profile ${PROFILE} lambda invoke --function-name ${O_FN} --invocation-type Event --payload file://etc/event.json --cli-binary-format raw-in-base64-out --log-type Tail tmp/fn.json | jq "."
+sam.logs:
+	sam logs --stack-name ${SAM_STACK} --tail
+sam.logs.traces:
+	sam logs --stack-name ${SAM_STACK} --tail --include-traces
 
 artillery:
 	artillery run etc/artillery.yaml
