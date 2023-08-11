@@ -1,0 +1,17 @@
+config:
+  target: "https://zet1a4pjd0.execute-api.us-east-1.amazonaws.com"
+  phases:
+    - name: warmup
+      duration: 10
+      arrivalRate: 1
+      rampTo: 20
+    - name: core
+      duration: 60
+      arrivalRate: 20
+scenarios:
+  - name: public
+    flow:
+      - post:
+          url: "/dev/dice"
+          json:
+            name: heeki

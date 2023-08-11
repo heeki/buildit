@@ -1,0 +1,13 @@
+S3BUCKET=your-s3-bucket
+PROFILE=your-cli-profile
+
+P_CHANCE_OF_FAILURE=5
+P_API_STAGE=dev
+P_FN_MEMORY=128
+P_FN_TIMEOUT=15
+
+SAM_STACK=your-stack-name
+SAM_TEMPLATE=iac/apigw.yaml
+SAM_OUTPUT=iac/apigw_output.yaml
+SAM_PARAMS="ParameterKey=pChanceOfFailure,ParameterValue=${P_CHANCE_OF_FAILURE} ParameterKey=pApiStage,ParameterValue=${P_API_STAGE} ParameterKey=pFnMemory,ParameterValue=${P_FN_MEMORY} ParameterKey=pFnTimeout,ParameterValue=${P_FN_TIMEOUT}"
+O_FN=output-fn-name

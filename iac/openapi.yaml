@@ -1,0 +1,60 @@
+openapi: 3.0.1
+info:
+  title: build-it
+  description: Demo API endpoint for the Build It! event
+  version: 0.1.0
+
+paths:
+  /dice:
+    get:
+      parameters:
+        - in: query
+          name: name
+          required: true
+          schema:
+            $ref: '#/components/schemas/param'
+      x-amazon-apigateway-request-validator: param
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        payloadFormatVersion: "1.0"
+        type: AWS_PROXY
+        uri:
+          Fn::Sub: 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Fn.Arn}/invocations'
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      x-amazon-apigateway-request-validator: body
+      x-amazon-apigateway-integration:
+        httpMethod: POST
+        payloadFormatVersion: "1.0"
+        type: AWS_PROXY
+        uri:
+          Fn::Sub: 'arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${Fn.Arn}/invocations'
+
+components:
+  schemas:
+    param:
+      type: string
+      minLength: 2
+      maxLength: 30
+    body:
+      type: object
+      properties:
+        name:
+          type: string
+          minLength: 2
+          maxLength: 30
+      required:
+        - name
+
+x-amazon-apigateway-request-validators:
+  body:
+    validateRequestBody: true
+    validateRequestParameters: false
+  param:
+    validateRequestBody: false
+    validateRequestParameters: true
