@@ -64,7 +64,7 @@ def get_dice_rolls(event):
     return response_code, response
 
 def handler(event, context):
-    print(json.dumps(event["headers"]))
+    print(json.dumps(event))
     if event["httpMethod"] == "POST":
         if random.randint(1, 100) <= int(chance_of_failure):
             response_code = 503
