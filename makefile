@@ -2,7 +2,7 @@ include etc/environment.sh
 
 # boto3
 layer:
-	pip install -r requirements.txt --target=tmp/boto3/python --upgrade
+	pip install -r src/layer/requirements.txt --target=tmp/boto3/python --upgrade
 
 # lambda
 lambda: lambda.package lambda.deploy

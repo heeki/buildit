@@ -119,7 +119,7 @@ Resources:
   Fn:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: ../src/roll
+      CodeUri: ../src/lambda
       Handler: fn.handler
       Role: !GetAtt FnRole.Arn
       Layers:
