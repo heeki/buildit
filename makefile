@@ -44,3 +44,17 @@ sam.logs.traces:
 # load testing
 artillery:
 	artillery run etc/artillery.yaml
+
+# infrastructure for ecs application
+infrastructure: infrastructure.package infrastructure.deploy
+infrastructure.package:
+	sam package --profile ${PROFILE} -t ${INFRASTRUCTURE_TEMPLATE} --output-template-file ${INFRASTRUCTURE_OUTPUT} --s3-bucket ${BUCKET} --s3-prefix ${INFRASTRUCTURE_STACK}
+infrastructure.deploy:
+	sam deploy --profile ${PROFILE} -t ${INFRASTRUCTURE_OUTPUT} --stack-name ${INFRASTRUCTURE_STACK} --parameter-overrides ${INFRASTRUCTURE_PARAMS} --capabilities CAPABILITY_NAMED_IAM
+
+# ecs cluster and service
+ecs: ecs.package ecs.deploy
+ecs.package:
+	sam package --profile ${PROFILE} -t ${ECS_TEMPLATE} --output-template-file ${ECS_OUTPUT} --s3-bucket ${BUCKET} --s3-prefix ${ECS_STACK}
+ecs.deploy:
+	sam deploy --profile ${PROFILE} -t ${ECS_OUTPUT} --stack-name ${ECS_STACK} --parameter-overrides ${ECS_PARAMS} --capabilities CAPABILITY_NAMED_IAM

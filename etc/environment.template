@@ -12,3 +12,18 @@ LAMBDA_OUTPUT=iac/lambda_output.yaml
 LAMBDA_PARAMS="ParameterKey=pChanceOfFailure,ParameterValue=${P_CHANCE_OF_FAILURE} ParameterKey=pApiStage,ParameterValue=${P_API_STAGE} ParameterKey=pFnMemory,ParameterValue=${P_FN_MEMORY} ParameterKey=pFnTimeout,ParameterValue=${P_FN_TIMEOUT}"
 O_FN=output-fn-name
 O_API_ENDPOINT=output-api-endpoint
+
+P_VPC_ID=your-vpc-id
+P_HOSTEDZONE_ID=your-public-hosted-zone-id
+P_DOMAINNAME=buildit.heeki.cloud
+P_CLIENT_INGRESS_CIDR=your-ingress-cidr
+P_SUBNETIDS_PUBLIC=-your-comma-separated-list-of-subnet-ids
+INFRASTRUCTURE_STACK=buildit-ecs-infrastructure
+INFRASTRUCTURE_TEMPLATE=iac/infrastructure.yaml
+INFRASTRUCTURE_OUTPUT=iac/infrastructure_output.yaml
+INFRASTRUCTURE_PARAMS="ParameterKey=pVpcId,ParameterValue=${P_VPC_ID} ParameterKey=pHostedZoneId,ParameterValue=${P_HOSTEDZONE_ID} ParameterKey=pDomainName,ParameterValue=${P_DOMAINNAME} ParameterKey=pClientIngressCidr,ParameterValue=${P_CLIENT_INGRESS_CIDR} ParameterKey=pSubnetIds,ParameterValue=${P_SUBNETIDS_PUBLIC}"
+O_CERT_ARN=output-certificate-arn
+O_ALB_ARN=output-alb-arn
+O_ALB_TGROUP=output-alb-target-group-arn
+O_SGROUP_ALB=output-sgroup-alb
+O_SGROUP_TASK=output-sgroup-task
