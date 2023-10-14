@@ -27,3 +27,19 @@ O_ALB_ARN=output-alb-arn
 O_ALB_TGROUP=output-alb-target-group-arn
 O_SGROUP_ALB=output-sgroup-alb
 O_SGROUP_TASK=output-sgroup-task
+
+export DICE_TABLE=your-dynamodb-table-name
+export CHANCE_OF_FAILURE=5
+
+C_REPO_BASE=${ACCOUNTID}.dkr.ecr.${REGION}.amazonaws.com
+C_REPO_IMAGE=your-ecr-repository-name
+C_VERSION=1
+C_TAG=${C_REPO_IMAGE}:${C_VERSION}
+C_REPO_URI=${C_REPO_BASE}/${C_REPO_IMAGE}:${C_VERSION}
+
+P_DESIRED_COUNT=2
+P_TABLE_ARN=your-dynamodb-table-arn
+ECS_STACK=buildit-ecs-cluster
+ECS_TEMPLATE=iac/ecs.yaml
+ECS_OUTPUT=iac/ecs_output.yaml
+ECS_PARAMS="ParameterKey=pDesiredCount,ParameterValue=${P_DESIRED_COUNT} ParameterKey=pALBArn,ParameterValue=${O_ALB_ARN} ParameterKey=pTargetGroupArn,ParameterValue=${O_ALB_TGROUP} ParameterKey=pTaskSGroup,ParameterValue=${O_SGROUP_TASK} ParameterKey=pSubnetIds,ParameterValue=${P_SUBNETIDS_PUBLIC} ParameterKey=pImageUri,ParameterValue=${C_REPO_URI} ParameterKey=pTableArn,ParameterValue=${P_TABLE_ARN}"
