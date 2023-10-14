@@ -16,7 +16,9 @@ lambda.local.api:
 	sam local start-api -t ${LAMBDA_TEMPLATE} --parameter-overrides ${LAMBDA_PARAMS} --env-vars etc/envvars.json
 lambda.local.invoke:
 	sam local invoke -t ${LAMBDA_TEMPLATE} --parameter-overrides ${LAMBDA_PARAMS} --env-vars etc/envvars.json -e etc/event.json Fn | jq
-curl.local:
+curl.local.get:
+	curl -s -XGET http://127.0.0.1:3000/dice\?name\=test | jq
+curl.local.post:
 	curl -s -XPOST -d @etc/payload.json http://127.0.0.1:3000/dice | jq
 
 # local testing with build
@@ -32,9 +34,9 @@ lambda.invoke.sync:
 	cat tmp/fn.json | jq
 lambda.invoke.async:
 	aws --profile ${PROFILE} lambda invoke --function-name ${O_FN} --invocation-type Event --payload file://etc/event.json --cli-binary-format raw-in-base64-out --log-type Tail tmp/fn.json | jq "."
-curl.get:
+curl.apigw.get:
 	curl -s -XGET ${O_API_ENDPOINT}/dice\?name\=test | jq
-curl.post:
+curl.apigw.post:
 	curl -s -XPOST -d @etc/payload.json ${O_API_ENDPOINT}/dice | jq
 
 # cloudwatch logs
