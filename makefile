@@ -17,7 +17,7 @@ lambda.local.api:
 lambda.local.invoke:
 	sam local invoke -t ${LAMBDA_TEMPLATE} --parameter-overrides ${LAMBDA_PARAMS} --env-vars etc/envvars.json -e etc/event.json Fn | jq
 curl.local.get:
-	curl -s -XGET http://127.0.0.1:3000/dice\?name\=test | jq
+	curl -s -XGET http://127.0.0.1:3000/dice\?name\=test | jq -c '.[]'
 curl.local.post:
 	curl -s -XPOST -d @etc/payload.json http://127.0.0.1:3000/dice | jq
 
@@ -35,7 +35,7 @@ lambda.invoke.sync:
 lambda.invoke.async:
 	aws --profile ${PROFILE} lambda invoke --function-name ${O_FN} --invocation-type Event --payload file://etc/event.json --cli-binary-format raw-in-base64-out --log-type Tail tmp/fn.json | jq "."
 curl.apigw.get:
-	curl -s -XGET ${O_API_ENDPOINT}/dice\?name\=test | jq
+	curl -s -XGET ${O_API_ENDPOINT}/dice\?name\=test | jq -c '.[]'
 curl.apigw.post:
 	curl -s -XPOST -d @etc/payload.json ${O_API_ENDPOINT}/dice | jq
 
@@ -60,7 +60,7 @@ infrastructure.deploy:
 fastapi:
 	cd src/application && uvicorn fapi:server --reload
 curl.fastapi.get:
-	curl -s -XGET http://127.0.0.1:8000/dice/\?name\=test | jq
+	curl -s -XGET http://127.0.0.1:8000/dice/\?name\=test | jq -c '.[]'
 curl.fastapi.post:
 	curl -s -XPOST -H "content-type: application/json" -d @etc/payload.json http://127.0.0.1:8000/dice/ | jq
 
@@ -80,7 +80,7 @@ docker.run:
 
 # docker testing
 curl.docker.get:
-	curl -s -XGET http://127.0.0.1:8080/dice/\?name\=test | jq
+	curl -s -XGET http://127.0.0.1:8080/dice/\?name\=test | jq -c '.[]'
 curl.docker.post:
 	curl -s -XPOST -H "content-type: application/json" -d @etc/payload.json http://127.0.0.1:8080/dice/ | jq
 
@@ -93,6 +93,6 @@ ecs.deploy:
 
 # ecs testing
 curl.ecs.get:
-	curl -s -XGET https://buildit.heeki.cloud/dice/\?name\=test | jq
+	curl -s -XGET https://buildit.heeki.cloud/dice/\?name\=test | jq -c '.[]'
 curl.ecs.post:
 	curl -s -XPOST -H "content-type: application/json" -d @etc/payload.json https://buildit.heeki.cloud/dice/ | jq
